@@ -5,7 +5,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve"
+    "start": "webpack serve --open"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,8 @@
     "webpack": "^5.106.2",
     "webpack-cli": "^7.0.2",
     "webpack-dev-server": "^5.2.3"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0"
   }
 }
