@@ -1,3 +1,139 @@
+:root {
+  --header-color: #855a5a;
+}
+
+.tagesschrift-regular {
+  font-family: "Tagesschrift", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
-  background-color: rebeccapurple;
+  margin: 0;
+  padding: 0;
+  font-family: "Tagesschrift", system-ui;
+}
+
+header {
+  background-color: var(--header-color);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+}
+
+.left-header img {
+  height: 40px;
+  margin-right: 1rem;
+  border-radius: 7px;
+}
+
+.left-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+nav button:not(:last-child) {
+  margin-right: 1rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+nav button:not(:last-child):hover {
+  text-decoration: underline;
+}
+
+nav button:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+#add-todo {
+  color: var(--header-color);
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+#add-todo:hover {
+  background-color: #f0f0f0;
+  box-shadow: 5px 5px 8px -1px #572531;
+}
+
+#home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+#home-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+#home-page p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+#home-page img {
+  width: 200px;
+  height: auto;
+}
+
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  /* display: block; */
+  margin-bottom: 0.5rem;
+  /* font-weight: bold; */
+}
+
+dialog form input,
+textarea {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+dialog form input:focus,
+textarea:focus {
+  /* outline: none; */
+  border-color: var(--header-color);
+  box-shadow: 0 0 5px var(--header-color);
+}
+
+textarea {
+  resize: vertical;
+  max-height: 100px;
+  min-height: 30px;
 }
