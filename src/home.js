@@ -18,9 +18,18 @@ export default function homePage() {
   homeTitle.textContent = "Welcome to Your Todo List";
   homePage.appendChild(homeTitle);
 
-  const homeDescription2 = document.createElement("p");
-  homeDescription2.textContent = 'Click the "Add Todo" button to get started.';
-  homePage.appendChild(homeDescription2);
+  const homeDescriptions = [
+    'Click the "Add Todo" button to get started.',
+    'Click on "Projects" to see you existing todos',
+  ];
+  const homeDescriptionsUl = document.createElement("ul");
+  homeDescriptionsUl.classList.add("home-description");
+  homeDescriptions.forEach((homeDescription) => {
+    const li = document.createElement("li");
+    li.textContent = homeDescription;
+    homeDescriptionsUl.appendChild(li);
+  });
+  homePage.appendChild(homeDescriptionsUl);
 
   content.appendChild(homePage);
 }
