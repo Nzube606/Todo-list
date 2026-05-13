@@ -53,9 +53,9 @@ nav button:not(:last-child):hover {
   text-decoration: underline;
 }
 
-nav button:focus {
+nav button:focus:not(:last-child) {
   outline: none;
-  text-decoration: underline;
+  color: #e9e2e2;
 }
 
 #add-todo {
@@ -78,7 +78,7 @@ nav button:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: 80vh;
 }
 
 #home-page h2 {
@@ -116,7 +116,8 @@ label {
 }
 
 dialog form input,
-textarea {
+textarea,
+select {
   padding: 0.5rem;
   margin-bottom: 1rem;
   outline: none;
@@ -136,4 +137,84 @@ textarea {
   resize: vertical;
   max-height: 100px;
   min-height: 30px;
+}
+
+dialog form button {
+  padding: 0.5rem 1rem;
+  background-color: var(--header-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+dialog form button:hover {
+  background-color: #6b4545;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.home-description li {
+  list-style-type: none;
+  font-size: 1.3rem;
+}
+
+.home-description li::before {
+  content: "✔ ";
+}
+
+#project-content {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  height: 80vh;
+  /* max-height: fit-content; */
+  padding: 0.1rem 2rem;
+}
+
+.add-project-button {
+  padding: 0.5rem;
+  background-color: var(--header-color);
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.add-project-button:hover {
+  background-color: #6b4545;
+  box-shadow: 0 0 10px #6b4545;
+}
+.project-dialog-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.error-validation {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-item {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#projects-list {
+  align-self: center;
+  margin: auto;
+  font-size: 1.2rem;
 }
