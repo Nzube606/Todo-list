@@ -1,7 +1,5 @@
+import projects from "./projectPage.js";
 export default function addTodoPage() {
-  const content = document.querySelector("#content");
-  content.textContent = "";
-
   const addTodoDialog = document.createElement("dialog");
   addTodoDialog.id = "add-todo-dialog";
 
@@ -43,6 +41,47 @@ export default function addTodoPage() {
 
   form.appendChild(dueDateLabel);
   form.appendChild(dueDateInput);
+
+  const priorityLabel = document.createElement("label");
+  priorityLabel.textContent = "Priority: ";
+  priorityLabel.htmlFor = "todo-priority";
+  const prioritySelect = document.createElement("select");
+  prioritySelect.id = "todo-priority";
+  prioritySelect.name = "priority";
+
+  const priorities = ["Low", "Medium", "High"];
+  priorities.forEach((priority) => {
+    const option = document.createElement("option");
+    option.value = priority.toLowerCase();
+    option.textContent = priority;
+    prioritySelect.appendChild(option);
+  });
+
+  form.appendChild(priorityLabel);
+  form.appendChild(prioritySelect);
+
+  const projectLabel = document.createElement("label");
+  projectLabel.textContent = "Add to project";
+  form.appendChild(projectLabel);
+
+  const btnContainer = document.createElement("div");
+  btnContainer.classList.add("button-container");
+
+  const cancelButton = document.createElement("button");
+  cancelButton.type = "button";
+  cancelButton.textContent = "Cancel";
+  cancelButton.addEventListener("click", () => {
+    addTodoDialog.close();
+  });
+
+  const submitButton = document.createElement("button");
+  submitButton.type = "submit";
+  submitButton.textContent = "Add Todo";
+
+  btnContainer.appendChild(cancelButton);
+  btnContainer.appendChild(submitButton);
+  form.appendChild(btnContainer);
+
   addTodoDialog.appendChild(form);
 
   const body = document.querySelector("body");
