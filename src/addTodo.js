@@ -116,6 +116,8 @@ export default function addTodoPage() {
     addTodo();
     addTodoDialog.close();
   });
+  btnContainer.appendChild(cancelButton);
+  btnContainer.appendChild(submitButton);
 
   function addTodo() {
     const selectedProjectTitle = projectSelect.value;
@@ -135,7 +137,7 @@ export default function addTodoPage() {
           titleInput.value,
           descriptionInput.value,
           dueDateInput.value,
-          prioritySelect.value,
+          prioritySelect.value.toLowerCase(),
           unNamedProject.title,
           false,
         );
@@ -156,32 +158,28 @@ export default function addTodoPage() {
           titleInput.value,
           descriptionInput.value,
           dueDateInput.value,
-          prioritySelect.value,
+          prioritySelect.value.toLowerCase(),
           unNamedProject.title,
           false,
         );
         unNamedProject.todos.push(newTodo);
         projectPageInstance.renderPage(); // Refresh the project page to show the new todo
-        // createTodo(newTodo, projectDom);
       }
     } else {
       const newTodo = new Todo(
         titleInput.value,
         descriptionInput.value,
         dueDateInput.value,
-        prioritySelect.value,
+        prioritySelect.value.toLowerCase(),
         selectedProject.title,
         false,
       );
 
       selectedProject.todos.push(newTodo);
       projectPage(); // Refresh the project page to show the new todo
-      // createTodo(newTodo, projectDom);
     }
   }
 
-  btnContainer.appendChild(cancelButton);
-  btnContainer.appendChild(submitButton);
   form.appendChild(btnContainer);
 
   addTodoDialog.appendChild(form);
