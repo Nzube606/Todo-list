@@ -1,6 +1,8 @@
-import projects from "./projectPage.js";
+import projectPage, { projects } from "./projectPage.js";
+import { Todo } from "./createTodo.js";
+// import { se } from "date-fns/locale";
 export default function addTodoPage() {
-  const addTodoDialog = document.createElement("dialog");
+  const addTodoDialog = document.createElement("dialog"); // Create a dialog element for the add todo form
   addTodoDialog.id = "add-todo-dialog";
 
   const form = document.createElement("form");
@@ -23,6 +25,7 @@ export default function addTodoPage() {
   const descriptionLabel = document.createElement("label");
   descriptionLabel.textContent = "Description:";
   descriptionLabel.htmlFor = "todo-description";
+
   const descriptionInput = document.createElement("textarea");
   descriptionInput.id = "todo-description";
   descriptionInput.name = "description";
@@ -61,8 +64,27 @@ export default function addTodoPage() {
   form.appendChild(prioritySelect);
 
   const projectLabel = document.createElement("label");
-  projectLabel.textContent = "Add to project";
+  projectLabel.textContent = "Add to project: ";
+
+  const projectSelect = document.createElement("select");
+  projectSelect.id = "project-select";
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "choose-project";
+  defaultOption.textContent = "Choose a project";
+  defaultOption.disabled = true; // Disable the default option to prevent selection
+  defaultOption.selected = true; // Set the default option as selected
+  projectSelect.appendChild(defaultOption);
+  // projectSelect.name = "project";
+
+  projects.forEach((project) => {
+    const option = document.createElement("option");
+    option.value = project.title;
+    option.textContent = project.title;
+    projectSelect.appendChild(option);
+  });
+
   form.appendChild(projectLabel);
+  form.appendChild(projectSelect);
 
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("button-container");
@@ -77,6 +99,86 @@ export default function addTodoPage() {
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
   submitButton.textContent = "Add Todo";
+  submitButton.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    if (!titleInput.value || titleInput.value.trim() === "") {
+      alert("Title cannot be empty.");
+      return;
+    }
+    if (
+      !descriptionInput.value ||
+      descriptionInput.value.trim() === "" ||
+      descriptionInput.value.length < 10
+    ) {
+      alert("Description must be at least 10 characters long.");
+      return;
+    }
+    addTodo();
+    addTodoDialog.close();
+  });
+
+  function addTodo() {
+    const selectedProjectTitle = projectSelect.value;
+    const selectedProject = projects.find(
+      (project) => project.title === selectedProjectTitle,
+    );
+
+    if (selectedProjectTitle == "choose-project") {
+      // If no project is selected, add the todo to the "Unnamed Project"
+      if (projects.some((project) => project.title === "Unnamed Project")) {
+        // If the "Unnamed Project" already exists, add the todo to it
+        const unNamedProject = projects.find(
+          (project) => project.title === "Unnamed Project",
+        );
+
+        const newTodo = new Todo(
+          titleInput.value,
+          descriptionInput.value,
+          dueDateInput.value,
+          prioritySelect.value,
+          unNamedProject.title,
+          false,
+        );
+        unNamedProject.todos.push(newTodo);
+        projectPage(); // Refresh the project page to show the new todo
+        // createTodo(newTodo, projectDom);
+      } else {
+        const unNamedProject = {
+          title: "Unnamed Project",
+          todos: [], // Initialize an empty array for todos in the new project
+        };
+        projects.push(unNamedProject);
+        projectPage(); // Refresh the project page to show the new project
+        const projectPageInstance = projectPage(); // Get the instance of the project page
+        projectPageInstance.renderPage(); // Call the renderPage method to update the project list
+
+        const newTodo = new Todo(
+          titleInput.value,
+          descriptionInput.value,
+          dueDateInput.value,
+          prioritySelect.value,
+          unNamedProject.title,
+          false,
+        );
+        unNamedProject.todos.push(newTodo);
+        projectPageInstance.renderPage(); // Refresh the project page to show the new todo
+        // createTodo(newTodo, projectDom);
+      }
+    } else {
+      const newTodo = new Todo(
+        titleInput.value,
+        descriptionInput.value,
+        dueDateInput.value,
+        prioritySelect.value,
+        selectedProject.title,
+        false,
+      );
+
+      selectedProject.todos.push(newTodo);
+      projectPage(); // Refresh the project page to show the new todo
+      // createTodo(newTodo, projectDom);
+    }
+  }
 
   btnContainer.appendChild(cancelButton);
   btnContainer.appendChild(submitButton);
@@ -88,5 +190,4 @@ export default function addTodoPage() {
   body.appendChild(addTodoDialog);
 
   addTodoDialog.showModal();
-  //   content.appendChild(addTodoDialog);
 }
