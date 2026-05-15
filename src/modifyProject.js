@@ -1,7 +1,7 @@
 import projectPage from "./projectPage.js";
 export function editProject(project) {
-  const content = document.querySelector("#content");
-  const dialog = document.createElement("dialog");
+  const content = document.querySelector("#content"); // this is to attach the dialog to the screen
+  const dialog = document.createElement("dialog"); // dialog to take in new values
   dialog.classList.add("edit-project-dialog");
 
   const form = document.createElement("form");
@@ -30,7 +30,7 @@ export function editProject(project) {
   saveButton.type = "submit";
   saveButton.addEventListener("click", (e) => {
     e.preventDefault();
-    if (titleInput.value.trim() === "") {
+    if (!titleInput.value || titleInput.value.trim() === "") {
       alert("Please fill in a valid title");
       return;
     } else {
@@ -52,7 +52,7 @@ export function editProject(project) {
   dialog.showModal();
 }
 
-export function deleteProject(projects, current) {
+export function deleteProject(array, arrayItem) {
   const content = document.querySelector("#content");
   const dialog = document.createElement("dialog");
   content.appendChild(dialog);
@@ -74,12 +74,12 @@ export function deleteProject(projects, current) {
   confirmButtonsDiv.appendChild(yesButton);
   yesButton.addEventListener("click", (e) => {
     e.preventDefault();
-    const index = projects.findIndex(
-      (project) => project.title === current.title,
+    const index = array.findIndex(
+      (project) => project.title === arrayItem.title,
     );
 
     if (index !== -1) {
-      projects.splice(index, 1);
+      array.splice(index, 1);
       dialog.close();
       projectPage();
     }
