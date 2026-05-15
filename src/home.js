@@ -20,7 +20,7 @@ export default function homePage() {
 
   const homeDescriptions = [
     'Click the "Add Todo" button to get started.',
-    'Click on "Projects" to see you existing todos',
+    'Click on "Projects" to see your existing todos',
   ];
   const homeDescriptionsUl = document.createElement("ul");
   homeDescriptionsUl.classList.add("home-description");
