@@ -1,3 +1,4 @@
+import { editProject, deleteProject } from "./modifyProject.js";
 export const projects = []; // This will hold the list of projects
 
 export default function projectPage() {
@@ -28,10 +29,133 @@ export default function projectPage() {
         const projectItemLi = document.createElement("li"); // Create a list item for each project item
         const projectItem = document.createElement("div"); // Create a div to hold the project item
         projectItemLi.appendChild(projectItem);
-        projectItem.classList.add("project-item");
-        projectItem.textContent = project.title; // Display the project title
 
+        const projectTitleDiv = document.createElement("div"); // Create a div to hold the project title and buttons
+        projectTitleDiv.classList.add("project-title-div");
+        projectItem.appendChild(projectTitleDiv);
+
+        const projectTitle = document.createElement("div"); // Create a div for the project title
+        projectTitle.classList.add("project-title");
+        projectTitle.textContent = project.title;
+
+        const projectButtonsSpan = document.createElement("span");
+        projectButtonsSpan.classList.add("project-buttons-span");
+
+        const projectEditButton = document.createElement("button");
+        projectEditButton.textContent = " ✏️";
+        projectEditButton.title = "Edit project";
+        projectEditButton.classList.add("edit-project-button");
+        projectEditButton.addEventListener("click", (e) => {
+          e.stopPropagation(); // Prevent the click event from bubbling up to the project title div
+          editProject(project);
+        });
+        projectButtonsSpan.appendChild(projectEditButton);
+
+        const projectDeleteButton = document.createElement("button");
+        projectDeleteButton.textContent = " 🗑️";
+        projectDeleteButton.title = "Delete project";
+        projectDeleteButton.classList.add("delete-project-button");
+        projectDeleteButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteProject(projects, project);
+        });
+        projectButtonsSpan.appendChild(projectDeleteButton);
+
+        projectTitleDiv.appendChild(projectTitle);
+
+        projectItem.appendChild(projectTitleDiv);
+        projectTitleDiv.appendChild(projectButtonsSpan);
+
+        const projectTodos = document.createElement("div");
+        projectTodos.classList.add("project-todos");
+        projectItem.appendChild(projectTodos);
+
+        projectItem.classList.add("project-item");
         projectItemUl.appendChild(projectItemLi);
+
+        projectTitle.addEventListener("click", () => {
+          // Toggle the visibility of the project todos when the project title is clicked
+          if (projectTodos.style.display === "none") {
+            projectTodos.style.display = "block";
+          } else {
+            projectTodos.style.display = "none";
+          }
+        });
+
+        if (project.todos) {
+          // If the project has todos, display the todos under the project title
+          project.todos.forEach((todo) => {
+            const todoPropDiv = document.createElement("div");
+            todoPropDiv.classList.add("todo-properties");
+
+            const todoTitleDiv = document.createElement("div");
+            todoTitleDiv.classList.add("todo-title");
+
+            const todoBox = document.createElement("input");
+            todoBox.type = "checkbox";
+            todoBox.classList.add("todo-box");
+            todoBox.addEventListener("change", () => {
+              // Add an event listener to the checkbox to update the checked status of the todo when the checkbox is toggled
+              if (todoBox.checked) {
+                todo.setChecked(true);
+              } else {
+                todo.setChecked(false);
+              }
+            });
+            const checked = todo.getChecked();
+            todoBox.checked = checked;
+            todoTitleDiv.appendChild(todoBox);
+
+            const todoTitle = document.createElement("span");
+            todoTitle.id = "todoBox-title";
+            todoTitle.textContent = todo.title;
+            todoTitleDiv.appendChild(todoTitle);
+
+            const todoButtonsSpan = document.createElement("span"); // Create a span to hold the todo modify buttons
+            todoButtonsSpan.classList.add("todo-buttons-span");
+            todoTitleDiv.appendChild(todoButtonsSpan);
+
+            const todoEditButton = document.createElement("button");
+            todoEditButton.textContent = " ✏️";
+            todoEditButton.title = "Edit todo";
+            todoEditButton.classList.add("edit-todo-button");
+            todoButtonsSpan.appendChild(todoEditButton);
+
+            const todoDeleteButton = document.createElement("button");
+            todoDeleteButton.textContent = " 🗑️";
+            todoDeleteButton.title = "Delete todo";
+            todoDeleteButton.classList.add("delete-todo-button");
+            todoButtonsSpan.appendChild(todoDeleteButton);
+
+            const todoDescription = document.createElement("div");
+            todoDescription.id = "todoBox-description";
+            todoDescription.textContent = todo.description;
+            todoPropDiv.appendChild(todoDescription);
+
+            const todoDueDate = document.createElement("div");
+            todoDueDate.id = "todoBox-dueDate";
+            todoDueDate.textContent = `Due: ${todo.dueDate}`;
+            todoPropDiv.appendChild(todoDueDate);
+
+            const todoPriority = document.createElement("div");
+            todoPriority.id = "todoBox-priority";
+
+            todoPriority.textContent = `Priority: ${todo.priority}`;
+            todoPropDiv.appendChild(todoPriority);
+            projectTodos.appendChild(todoTitleDiv);
+            projectTodos.appendChild(todoPropDiv);
+            todoPropDiv.style.display = "none"; // Hide the todo properties by default
+
+            // add event listener to the div to toggle the visibility of the todo properties when the project title is clicked
+            todoTitle.addEventListener("click", () => {
+              if (todoPropDiv.style.display === "none") {
+                todoPropDiv.style.display = "block";
+              } else {
+                todoPropDiv.style.display = "none";
+              }
+            });
+          });
+        }
       });
     }
     projectContent.appendChild(projectsList);
@@ -64,6 +188,7 @@ export default function projectPage() {
     projectTitleInput.type = "text";
     projectTitleInput.name = "project-title";
     projectTitleInput.required = true;
+    projectTitleInput.placeholder = "Enter project title";
     form.appendChild(projectTitleInput);
 
     const projectDialogDiv = document.createElement("div");
@@ -89,6 +214,7 @@ export default function projectPage() {
       }
       const newProject = {
         title: projectTitleInput.value,
+        todos: [], // Initialize an empty array for todos in the new project
       };
       projects.push(newProject);
       projectDialog.close();
