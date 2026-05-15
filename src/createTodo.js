@@ -8,6 +8,37 @@ export class Todo {
     this.checked = checked;
   }
 
+  setTitle(title) {
+    this.title = title;
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  setDescription(description) {
+    this.description = description;
+  }
+
+  getDescription() {
+    return this.description;
+  }
+
+  setDueDate(dueDate) {
+    this.dueDate = dueDate;
+  }
+
+  getDueDate() {
+    return this.dueDate;
+  }
+
+  setPriority(priority) {
+    this.priority = priority;
+  }
+
+  getPriority() {
+    return this.priority;
+  }
   setChecked(checked) {
     checked === true ? (this.checked = true) : (this.checked = false);
   }
