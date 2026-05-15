@@ -1,4 +1,5 @@
 import { editProject, deleteProject } from "./modifyProject.js";
+import { editTodo, deleteTodo } from "./modifyTodos.js";
 export const projects = []; // This will hold the list of projects
 
 export default function projectPage() {
@@ -120,12 +121,21 @@ export default function projectPage() {
             todoEditButton.title = "Edit todo";
             todoEditButton.classList.add("edit-todo-button");
             todoButtonsSpan.appendChild(todoEditButton);
+            todoEditButton.addEventListener("click", (e) => {
+              e.preventDefault();
+              editTodo(todo);
+            });
 
             const todoDeleteButton = document.createElement("button");
             todoDeleteButton.textContent = " 🗑️";
             todoDeleteButton.title = "Delete todo";
             todoDeleteButton.classList.add("delete-todo-button");
             todoButtonsSpan.appendChild(todoDeleteButton);
+            todoDeleteButton.addEventListener("click", (e) => {
+              e.preventDefault();
+              let todos = project.todos; // reference the todos array inside each project.
+              deleteTodo(todos, todo);
+            });
 
             const todoDescription = document.createElement("div");
             todoDescription.id = "todoBox-description";
