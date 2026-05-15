@@ -110,9 +110,7 @@ dialog form {
   flex-direction: column;
 }
 label {
-  /* display: block; */
   margin-bottom: 0.5rem;
-  /* font-weight: bold; */
 }
 
 dialog form input,
@@ -155,6 +153,7 @@ dialog form button:hover {
 .button-container {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 0.5rem;
 }
 
 .home-description li {
@@ -169,10 +168,7 @@ dialog form button:hover {
 #project-content {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
   height: 80vh;
-  /* max-height: fit-content; */
   padding: 0.1rem 2rem;
 }
 
@@ -217,4 +213,103 @@ dialog form button:hover {
   align-self: center;
   margin: auto;
   font-size: 1.2rem;
+}
+
+#project-select,
+#project-select option {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#project-select:hover,
+#project-select option:hover {
+  background-color: #f0f0f0;
+}
+
+#todoBox-title {
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+}
+
+#todoBox-dueDate {
+  font-size: 0.8rem;
+  color: #555;
+  margin-left: 2rem;
+}
+
+input[type="checkbox"] {
+  transform: scale(0.8);
+  margin-right: 0.5rem;
+}
+
+#todoBox-description {
+  font-size: 0.9rem;
+  margin-left: 2rem;
+}
+
+#todoBox-priority {
+  font-size: 0.8rem;
+  color: #555;
+  margin-left: 2rem;
+}
+
+.project-title-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-buttons-span {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.project-buttons-span button {
+  padding: 0.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.project-buttons-span button:hover {
+  border: 1px solid var(--header-color);
+  border-radius: 5px;
+}
+
+.todo-buttons-span {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-buttons-span button {
+  padding: 0.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.todo-buttons-span button:hover {
+  border: 1px solid var(--header-color);
+  border-radius: 5px;
+}
+
+.todo-title {
+  display: flex;
+  align-items: center;
+}
+
+#edit-project-dialog-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 0.5rem;
+}
+
+#confirm-buttons-div {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 0.5rem;
 }
