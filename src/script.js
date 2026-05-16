@@ -3,7 +3,6 @@ import "./style.css";
 import homePage from "./home.js";
 import addTodoPage from "./addTodo.js";
 import projectPage from "./projectPage.js";
-import { add } from "date-fns";
 
 homePage();
 
