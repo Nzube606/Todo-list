@@ -1,4 +1,3 @@
-// import { format } from "date-fns";
 import "./style.css";
 import homePage from "./home.js";
 import addTodoPage from "./addTodo.js";
