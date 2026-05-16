@@ -1,6 +1,6 @@
 import projectPage, { projects } from "./projectPage.js";
 import { Todo } from "./createTodo.js";
-// import { se } from "date-fns/locale";
+import { saveProject } from "./storage.js";
 export default function addTodoPage() {
   const addTodoDialog = document.createElement("dialog"); // Create a dialog element for the add todo form
   addTodoDialog.id = "add-todo-dialog";
@@ -142,6 +142,7 @@ export default function addTodoPage() {
           false,
         );
         unNamedProject.todos.push(newTodo);
+        saveProject(projects);
         projectPage(); // Refresh the project page to show the new todo
         // createTodo(newTodo, projectDom);
       } else {
@@ -151,8 +152,8 @@ export default function addTodoPage() {
         };
         projects.push(unNamedProject);
         projectPage(); // Refresh the project page to show the new project
-        const projectPageInstance = projectPage(); // Get the instance of the project page
-        projectPageInstance.renderPage(); // Call the renderPage method to update the project list
+        // const projectPageInstance = projectPage(); // Get the instance of the project page
+        // projectPageInstance.renderPage(); // Call the renderPage method to update the project list
 
         const newTodo = new Todo(
           titleInput.value,
@@ -163,7 +164,8 @@ export default function addTodoPage() {
           false,
         );
         unNamedProject.todos.push(newTodo);
-        projectPageInstance.renderPage(); // Refresh the project page to show the new todo
+        saveProject(projects);
+        projectPage(); // Refresh the project page to show the new todo
       }
     } else {
       const newTodo = new Todo(
@@ -176,6 +178,7 @@ export default function addTodoPage() {
       );
 
       selectedProject.todos.push(newTodo);
+      saveProject(projects);
       projectPage(); // Refresh the project page to show the new todo
     }
   }
