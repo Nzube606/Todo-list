@@ -1,4 +1,6 @@
-import projectPage from "./projectPage.js";
+import projectPage, { projects } from "./projectPage.js";
+import { saveProject } from "./storage.js";
+
 export function editProject(project) {
   const content = document.querySelector("#content"); // this is to attach the dialog to the screen
   const dialog = document.createElement("dialog"); // dialog to take in new values
@@ -37,6 +39,7 @@ export function editProject(project) {
       project.title = titleInput.value;
       dialog.close();
       projectPage();
+      saveProject(projects);
     }
   });
   editProjectDialogButtons.appendChild(saveButton);
@@ -82,6 +85,7 @@ export function deleteProject(array, arrayItem) {
       array.splice(index, 1);
       dialog.close();
       projectPage();
+      saveProject(projects);
     }
   });
 
