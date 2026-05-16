@@ -1,49 +1,71 @@
 export class Todo {
   constructor(title, description, dueDate, priority, project, checked) {
-    this.title = title;
-    this.dueDate = dueDate;
-    this.description = description;
-    this.priority = priority;
-    this.project = project;
-    this.checked = checked;
+    this._title = title;
+    this._dueDate = dueDate;
+    this._description = description;
+    this._priority = priority;
+    this._project = project;
+    this._checked = checked;
   }
 
   setTitle(title) {
-    this.title = title;
+    this._title = title;
   }
 
   getTitle() {
-    return this.title;
+    return this._title;
   }
 
   setDescription(description) {
-    this.description = description;
+    this._description = description;
   }
 
   getDescription() {
-    return this.description;
+    return this._description;
   }
 
   setDueDate(dueDate) {
-    this.dueDate = dueDate;
+    this._dueDate = dueDate;
   }
 
   getDueDate() {
-    return this.dueDate;
+    return this._dueDate;
   }
 
   setPriority(priority) {
-    this.priority = priority;
+    this._priority = priority;
   }
 
   getPriority() {
-    return this.priority;
+    return this._priority;
   }
   setChecked(checked) {
-    checked === true ? (this.checked = true) : (this.checked = false);
+    checked === true ? (this._checked = true) : (this._checked = false);
   }
 
   getChecked() {
-    return this.checked;
+    return this._checked;
+  }
+  toJSON() {
+    // contros what JSON.stringify sees
+    return {
+      title: this._title,
+      description: this._description,
+      dueDate: this._dueDate,
+      priority: this._priority,
+      project: this._project,
+      checked: this._checked,
+    };
+  }
+
+  static fromJSON(obj) {
+    return new Todo(
+      obj.title,
+      obj.description,
+      obj.dueDate,
+      obj.priority,
+      obj.project,
+      obj.checked,
+    );
   }
 }
