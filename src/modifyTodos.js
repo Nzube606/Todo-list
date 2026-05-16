@@ -1,4 +1,6 @@
-import projectPage from "./projectPage.js";
+import projectPage, { projects } from "./projectPage.js";
+import { saveProject } from "./storage.js";
+
 export function editTodo(arrayItem) {
   const content = document.querySelector("#content");
   const dialog = document.createElement("dialog");
@@ -90,6 +92,7 @@ export function editTodo(arrayItem) {
     arrayItem.setDueDate(getDueDate);
     arrayItem.setPriority(prioritySelect.value);
     projectPage();
+    saveProject(projects);
   });
   btnContainer.appendChild(cancelButton);
   btnContainer.appendChild(saveButton);
@@ -126,6 +129,7 @@ export function deleteTodo(array, object) {
       array.splice(index, 1);
       dialog.close();
       projectPage();
+      saveProject(projects);
     }
   });
 
