@@ -99,21 +99,25 @@ export default function projectPage() {
             const todoBox = document.createElement("input");
             todoBox.type = "checkbox";
             todoBox.classList.add("todo-box");
+
+            const todoTitle = document.createElement("span");
+            todoTitle.id = "todoBox-title";
+            todoTitle.textContent = todo._title;
+
             todoBox.addEventListener("change", () => {
               // Add an event listener to the checkbox to update the checked status of the todo when the checkbox is toggled
               if (todoBox.checked) {
                 todo.setChecked(true);
+                todoTitle.classList.add("completed");
               } else {
                 todo.setChecked(false);
+                todoTitle.classList.remove("completed");
               }
             });
             const checked = todo.getChecked();
             todoBox.checked = checked;
             todoTitleDiv.appendChild(todoBox);
 
-            const todoTitle = document.createElement("span");
-            todoTitle.id = "todoBox-title";
-            todoTitle.textContent = todo._title;
             todoTitleDiv.appendChild(todoTitle);
 
             const todoPriorityColor = document.createElement("span"); // to show priority color next to the title
