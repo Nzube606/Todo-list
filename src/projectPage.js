@@ -1,6 +1,8 @@
 import { editProject, deleteProject } from "./modifyProject.js";
 import { editTodo, deleteTodo } from "./modifyTodos.js";
-export const projects = []; // This will hold the list of projects
+import { loadProject, saveProject } from "./storage.js";
+
+export const projects = loadProject(); // This will hold the list of projects
 
 export default function projectPage() {
   const content = document.querySelector("#content");
@@ -49,6 +51,7 @@ export default function projectPage() {
         projectEditButton.addEventListener("click", (e) => {
           e.stopPropagation(); // Prevent the click event from bubbling up to the project title div
           editProject(project);
+          saveProject(projects);
         });
         projectButtonsSpan.appendChild(projectEditButton);
 
@@ -59,6 +62,7 @@ export default function projectPage() {
         projectDeleteButton.addEventListener("click", (e) => {
           e.stopPropagation();
           deleteProject(projects, project);
+          saveProject(projects);
         });
         projectButtonsSpan.appendChild(projectDeleteButton);
 
@@ -109,8 +113,20 @@ export default function projectPage() {
 
             const todoTitle = document.createElement("span");
             todoTitle.id = "todoBox-title";
-            todoTitle.textContent = todo.title;
+            todoTitle.textContent = todo._title;
             todoTitleDiv.appendChild(todoTitle);
+
+            const todoPriorityColor = document.createElement("span"); // to show priority color next to the title
+
+            todoPriorityColor.id = "todo-priority-color";
+            if (todo._priority === "low") {
+              todoPriorityColor.style.backgroundColor = "purple";
+            } else if (todo._priority === "medium") {
+              todoPriorityColor.style.backgroundColor = "orange";
+            } else {
+              todoPriorityColor.style.backgroundColor = "red";
+            }
+            todoTitle.appendChild(todoPriorityColor);
 
             const todoButtonsSpan = document.createElement("span"); // Create a span to hold the todo modify buttons
             todoButtonsSpan.classList.add("todo-buttons-span");
@@ -124,6 +140,7 @@ export default function projectPage() {
             todoEditButton.addEventListener("click", (e) => {
               e.preventDefault();
               editTodo(todo);
+              saveProject(projects);
             });
 
             const todoDeleteButton = document.createElement("button");
@@ -135,22 +152,23 @@ export default function projectPage() {
               e.preventDefault();
               let todos = project.todos; // reference the todos array inside each project.
               deleteTodo(todos, todo);
+              saveProject(projects);
             });
 
             const todoDescription = document.createElement("div");
             todoDescription.id = "todoBox-description";
-            todoDescription.textContent = todo.description;
+            todoDescription.textContent = todo._description;
             todoPropDiv.appendChild(todoDescription);
 
             const todoDueDate = document.createElement("div");
             todoDueDate.id = "todoBox-dueDate";
-            todoDueDate.textContent = `Due: ${todo.dueDate}`;
+            todoDueDate.textContent = `Due: ${todo._dueDate}`;
             todoPropDiv.appendChild(todoDueDate);
 
             const todoPriority = document.createElement("div");
             todoPriority.id = "todoBox-priority";
 
-            todoPriority.textContent = `Priority: ${todo.priority}`;
+            todoPriority.textContent = `Priority: ${todo._priority}`;
             todoPropDiv.appendChild(todoPriority);
             projectTodos.appendChild(todoTitleDiv);
             projectTodos.appendChild(todoPropDiv);
@@ -227,6 +245,7 @@ export default function projectPage() {
         todos: [], // Initialize an empty array for todos in the new project
       };
       projects.push(newProject);
+      saveProject(projects);
       projectDialog.close();
       renderPage(); // Refresh the project page to show the new project
     });
@@ -248,5 +267,5 @@ export default function projectPage() {
     projectDialog.showModal();
   }
 
-  return { createProjectDialog, renderPage };
+  return renderPage;
 }
