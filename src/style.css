@@ -328,3 +328,50 @@ input[type="checkbox"] {
   text-decoration: line-through;
   opacity: 0.5;
 }
+
+@media (max-width: 480px) {
+  .left-header h1 {
+    font-size: 1.2rem;
+  }
+  .left-header img {
+    height: 40px;
+    margin-right: 0.5rem;
+  }
+  nav button:not(:last-child) {
+    margin-right: 0.5rem;
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  #add-todo {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  header {
+    height: 8vh;
+    padding: 0.5rem;
+  }
+  #home-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .home-description li {
+    font-size: 1.2rem;
+  }
+  #content {
+    padding: 0.5rem;
+  }
+
+  #project-content {
+    padding: 0.3rem;
+  }
+
+  #project-content h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+  #project-content > div {
+    font-size: 1.2rem;
+  }
+}
